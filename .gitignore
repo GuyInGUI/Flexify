@@ -54,3 +54,11 @@ chromedriver.zip
 chromedriver-win64/
 
 coverage/
+
+# Local build environment (not committed)
+/flutter/
+/jdk/
+/android-sdk/
+/.gradle/
+/.pub-cache/
+/build_apk.sh
