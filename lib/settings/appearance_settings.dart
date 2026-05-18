@@ -18,7 +18,7 @@ List<Widget> getAppearanceSettings(
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: DropdownButtonFormField<String>(
-          initialValue: settings.value.themeMode,
+          value: settings.value.themeMode,
           decoration: const InputDecoration(
             labelStyle: TextStyle(),
             labelText: 'Theme',

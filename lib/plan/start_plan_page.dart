@@ -255,7 +255,7 @@ class _StartPlanPageState extends State<StartPlanPage>
         visible: showUnits,
         child: DropdownButtonFormField<String>(
           decoration: const InputDecoration(labelText: 'Unit'),
-          initialValue: unit,
+          value: unit,
           items: _unitItems,
           onChanged: (String? newValue) {
             setState(() {

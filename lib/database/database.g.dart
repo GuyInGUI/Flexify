@@ -33,8 +33,14 @@ class $PlansTable extends Plans with TableInfo<$PlansTable, Plan> {
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
       'title', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _lastResetMeta =
+      const VerificationMeta('lastReset');
   @override
-  List<GeneratedColumn> get $columns => [days, id, sequence, title];
+  late final GeneratedColumn<DateTime> lastReset = GeneratedColumn<DateTime>(
+      'last_reset', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [days, id, sequence, title, lastReset];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -62,6 +68,10 @@ class $PlansTable extends Plans with TableInfo<$PlansTable, Plan> {
       context.handle(
           _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
     }
+    if (data.containsKey('last_reset')) {
+      context.handle(_lastResetMeta,
+          lastReset.isAcceptableOrUnknown(data['last_reset']!, _lastResetMeta));
+    }
     return context;
   }
 
@@ -79,6 +89,8 @@ class $PlansTable extends Plans with TableInfo<$PlansTable, Plan> {
           .read(DriftSqlType.int, data['${effectivePrefix}sequence']),
       title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title']),
+      lastReset: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}last_reset']),
     );
   }
 
@@ -93,7 +105,13 @@ class Plan extends DataClass implements Insertable<Plan> {
   final int id;
   final int? sequence;
   final String? title;
-  const Plan({required this.days, required this.id, this.sequence, this.title});
+  final DateTime? lastReset;
+  const Plan(
+      {required this.days,
+      required this.id,
+      this.sequence,
+      this.title,
+      this.lastReset});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -104,6 +122,9 @@ class Plan extends DataClass implements Insertable<Plan> {
     }
     if (!nullToAbsent || title != null) {
       map['title'] = Variable<String>(title);
+    }
+    if (!nullToAbsent || lastReset != null) {
+      map['last_reset'] = Variable<DateTime>(lastReset);
     }
     return map;
   }
@@ -117,6 +138,9 @@ class Plan extends DataClass implements Insertable<Plan> {
           : Value(sequence),
       title:
           title == null && nullToAbsent ? const Value.absent() : Value(title),
+      lastReset: lastReset == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastReset),
     );
   }
 
@@ -128,6 +152,7 @@ class Plan extends DataClass implements Insertable<Plan> {
       id: serializer.fromJson<int>(json['id']),
       sequence: serializer.fromJson<int?>(json['sequence']),
       title: serializer.fromJson<String?>(json['title']),
+      lastReset: serializer.fromJson<DateTime?>(json['lastReset']),
     );
   }
   @override
@@ -138,6 +163,7 @@ class Plan extends DataClass implements Insertable<Plan> {
       'id': serializer.toJson<int>(id),
       'sequence': serializer.toJson<int?>(sequence),
       'title': serializer.toJson<String?>(title),
+      'lastReset': serializer.toJson<DateTime?>(lastReset),
     };
   }
 
@@ -145,12 +171,14 @@ class Plan extends DataClass implements Insertable<Plan> {
           {String? days,
           int? id,
           Value<int?> sequence = const Value.absent(),
-          Value<String?> title = const Value.absent()}) =>
+          Value<String?> title = const Value.absent(),
+          Value<DateTime?> lastReset = const Value.absent()}) =>
       Plan(
         days: days ?? this.days,
         id: id ?? this.id,
         sequence: sequence.present ? sequence.value : this.sequence,
         title: title.present ? title.value : this.title,
+        lastReset: lastReset.present ? lastReset.value : this.lastReset,
       );
   Plan copyWithCompanion(PlansCompanion data) {
     return Plan(
@@ -158,6 +186,7 @@ class Plan extends DataClass implements Insertable<Plan> {
       id: data.id.present ? data.id.value : this.id,
       sequence: data.sequence.present ? data.sequence.value : this.sequence,
       title: data.title.present ? data.title.value : this.title,
+      lastReset: data.lastReset.present ? data.lastReset.value : this.lastReset,
     );
   }
 
@@ -167,13 +196,14 @@ class Plan extends DataClass implements Insertable<Plan> {
           ..write('days: $days, ')
           ..write('id: $id, ')
           ..write('sequence: $sequence, ')
-          ..write('title: $title')
+          ..write('title: $title, ')
+          ..write('lastReset: $lastReset')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(days, id, sequence, title);
+  int get hashCode => Object.hash(days, id, sequence, title, lastReset);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -181,7 +211,8 @@ class Plan extends DataClass implements Insertable<Plan> {
           other.days == this.days &&
           other.id == this.id &&
           other.sequence == this.sequence &&
-          other.title == this.title);
+          other.title == this.title &&
+          other.lastReset == this.lastReset);
 }
 
 class PlansCompanion extends UpdateCompanion<Plan> {
@@ -189,29 +220,34 @@ class PlansCompanion extends UpdateCompanion<Plan> {
   final Value<int> id;
   final Value<int?> sequence;
   final Value<String?> title;
+  final Value<DateTime?> lastReset;
   const PlansCompanion({
     this.days = const Value.absent(),
     this.id = const Value.absent(),
     this.sequence = const Value.absent(),
     this.title = const Value.absent(),
+    this.lastReset = const Value.absent(),
   });
   PlansCompanion.insert({
     required String days,
     this.id = const Value.absent(),
     this.sequence = const Value.absent(),
     this.title = const Value.absent(),
+    this.lastReset = const Value.absent(),
   }) : days = Value(days);
   static Insertable<Plan> custom({
     Expression<String>? days,
     Expression<int>? id,
     Expression<int>? sequence,
     Expression<String>? title,
+    Expression<DateTime>? lastReset,
   }) {
     return RawValuesInsertable({
       if (days != null) 'days': days,
       if (id != null) 'id': id,
       if (sequence != null) 'sequence': sequence,
       if (title != null) 'title': title,
+      if (lastReset != null) 'last_reset': lastReset,
     });
   }
 
@@ -219,12 +255,14 @@ class PlansCompanion extends UpdateCompanion<Plan> {
       {Value<String>? days,
       Value<int>? id,
       Value<int?>? sequence,
-      Value<String?>? title}) {
+      Value<String?>? title,
+      Value<DateTime?>? lastReset}) {
     return PlansCompanion(
       days: days ?? this.days,
       id: id ?? this.id,
       sequence: sequence ?? this.sequence,
       title: title ?? this.title,
+      lastReset: lastReset ?? this.lastReset,
     );
   }
 
@@ -243,6 +281,9 @@ class PlansCompanion extends UpdateCompanion<Plan> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
+    if (lastReset.present) {
+      map['last_reset'] = Variable<DateTime>(lastReset.value);
+    }
     return map;
   }
 
@@ -252,7 +293,8 @@ class PlansCompanion extends UpdateCompanion<Plan> {
           ..write('days: $days, ')
           ..write('id: $id, ')
           ..write('sequence: $sequence, ')
-          ..write('title: $title')
+          ..write('title: $title, ')
+          ..write('lastReset: $lastReset')
           ..write(')'))
         .toString();
   }
@@ -3826,12 +3868,14 @@ typedef $$PlansTableCreateCompanionBuilder = PlansCompanion Function({
   Value<int> id,
   Value<int?> sequence,
   Value<String?> title,
+  Value<DateTime?> lastReset,
 });
 typedef $$PlansTableUpdateCompanionBuilder = PlansCompanion Function({
   Value<String> days,
   Value<int> id,
   Value<int?> sequence,
   Value<String?> title,
+  Value<DateTime?> lastReset,
 });
 
 final class $$PlansTableReferences
@@ -3873,6 +3917,9 @@ class $$PlansTableFilterComposer extends Composer<_$AppDatabase, $PlansTable> {
 
   ColumnFilters<String> get title => $composableBuilder(
       column: $table.title, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get lastReset => $composableBuilder(
+      column: $table.lastReset, builder: (column) => ColumnFilters(column));
 
   Expression<bool> planExercisesRefs(
       Expression<bool> Function($$PlanExercisesTableFilterComposer f) f) {
@@ -3916,6 +3963,9 @@ class $$PlansTableOrderingComposer
 
   ColumnOrderings<String> get title => $composableBuilder(
       column: $table.title, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get lastReset => $composableBuilder(
+      column: $table.lastReset, builder: (column) => ColumnOrderings(column));
 }
 
 class $$PlansTableAnnotationComposer
@@ -3938,6 +3988,9 @@ class $$PlansTableAnnotationComposer
 
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastReset =>
+      $composableBuilder(column: $table.lastReset, builder: (column) => column);
 
   Expression<T> planExercisesRefs<T extends Object>(
       Expression<T> Function($$PlanExercisesTableAnnotationComposer a) f) {
@@ -3988,24 +4041,28 @@ class $$PlansTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             Value<int?> sequence = const Value.absent(),
             Value<String?> title = const Value.absent(),
+            Value<DateTime?> lastReset = const Value.absent(),
           }) =>
               PlansCompanion(
             days: days,
             id: id,
             sequence: sequence,
             title: title,
+            lastReset: lastReset,
           ),
           createCompanionCallback: ({
             required String days,
             Value<int> id = const Value.absent(),
             Value<int?> sequence = const Value.absent(),
             Value<String?> title = const Value.absent(),
+            Value<DateTime?> lastReset = const Value.absent(),
           }) =>
               PlansCompanion.insert(
             days: days,
             id: id,
             sequence: sequence,
             title: title,
+            lastReset: lastReset,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) =>

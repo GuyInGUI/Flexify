@@ -360,7 +360,7 @@ class _EditSetPageState extends State<EditSetPage> {
         visible: showUnits,
         child: DropdownButtonFormField<String>(
           decoration: const InputDecoration(labelText: 'Unit'),
-          initialValue: unit,
+          value: unit,
           items: getUnitItems(),
           onChanged: (String? newValue) {
             setState(() {

@@ -64,7 +64,7 @@ class _WeightPageState extends State<WeightPage> {
                 builder: (context, value, child) =>
                     DropdownButtonFormField<String>(
                   decoration: const InputDecoration(labelText: 'Unit'),
-                  initialValue: unit ?? value,
+                  value: unit ?? value,
                   items: const [
                     DropdownMenuItem(
                       value: 'kg',

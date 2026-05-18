@@ -41,7 +41,7 @@ List<Widget> getFormatSettings(String term, Setting settings) {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: DropdownButtonFormField<String>(
           decoration: const InputDecoration(labelText: 'Strength unit'),
-          initialValue: settings.strengthUnit,
+          value: settings.strengthUnit,
           items: const [
             DropdownMenuItem(
               value: "last-entry",
@@ -74,7 +74,7 @@ List<Widget> getFormatSettings(String term, Setting settings) {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: DropdownButtonFormField<String>(
           decoration: const InputDecoration(labelText: 'Cardio unit'),
-          initialValue: settings.cardioUnit,
+          value: settings.cardioUnit,
           items: const [
             DropdownMenuItem(
               value: "last-entry",
@@ -120,7 +120,7 @@ List<Widget> getFormatSettings(String term, Setting settings) {
                     DateFormat(settings.longDateFormat).format(DateTime.now());
 
               return DropdownButtonFormField<String>(
-                initialValue: settings.longDateFormat,
+                value: settings.longDateFormat,
                 menuMaxHeight: 300,
                 items: long.map((String value) {
                   return DropdownMenuItem<String>(
@@ -147,7 +147,7 @@ List<Widget> getFormatSettings(String term, Setting settings) {
         child: Tooltip(
           message: 'For where space is cramped (Graph lines)',
           child: DropdownButtonFormField<String>(
-            initialValue: settings.shortDateFormat,
+            value: settings.shortDateFormat,
             items: short.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,

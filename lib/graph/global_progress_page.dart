@@ -165,7 +165,7 @@ class _GlobalProgressPageState extends State<GlobalProgressPage> {
           children: [
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Metric'),
-              initialValue: metric,
+              value: metric,
               items: [
                 const DropdownMenuItem(
                   value: StrengthMetric.bestWeight,
@@ -199,7 +199,7 @@ class _GlobalProgressPageState extends State<GlobalProgressPage> {
             const SizedBox(height: 8),
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Period'),
-              initialValue: period,
+              value: period,
               items: const [
                 DropdownMenuItem(
                   value: Period.day,
@@ -232,7 +232,7 @@ class _GlobalProgressPageState extends State<GlobalProgressPage> {
                   const SizedBox(height: 8),
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'Unit'),
-                    initialValue: targetUnit,
+                    value: targetUnit,
                     items: const [
                       DropdownMenuItem(
                         value: 'kg',
@@ -373,14 +373,12 @@ class _GlobalProgressPageState extends State<GlobalProgressPage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          RadioGroup<int>(
+                          Radio<int>(
+                            value: 1,
                             groupValue: 1,
                             onChanged: (value) {},
-                            child: Radio<int>(
-                              value: 1,
-                              fillColor: WidgetStateProperty.resolveWith(
-                                (states) => entry.value,
-                              ),
+                            fillColor: WidgetStateProperty.resolveWith(
+                              (states) => entry.value,
                             ),
                           ),
                           Flexible(

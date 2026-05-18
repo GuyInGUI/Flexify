@@ -211,7 +211,7 @@ List<Widget> getWorkoutSettings(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: DropdownButtonFormField<String>(
           decoration: const InputDecoration(labelText: 'Default graph metric'),
-          initialValue: settings.defaultGraphMetric,
+          value: settings.defaultGraphMetric,
           items: const [
             DropdownMenuItem(value: 'bestWeight', child: Text("Best weight")),
             DropdownMenuItem(value: 'bestReps', child: Text("Best reps")),
@@ -233,7 +233,7 @@ List<Widget> getWorkoutSettings(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: DropdownButtonFormField<String>(
           decoration: const InputDecoration(labelText: 'Default graph period'),
-          initialValue: settings.defaultGraphPeriod,
+          value: settings.defaultGraphPeriod,
           items: const [
             DropdownMenuItem(value: 'day', child: Text("Daily")),
             DropdownMenuItem(value: 'week', child: Text("Weekly")),
@@ -250,7 +250,7 @@ List<Widget> getWorkoutSettings(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: DropdownButtonFormField<int>(
           decoration: const InputDecoration(labelText: 'Default graph limit'),
-          initialValue: settings.defaultGraphLimit,
+          value: settings.defaultGraphLimit,
           items: const [
             DropdownMenuItem(value: 10, child: Text("10")),
             DropdownMenuItem(value: 20, child: Text("20")),

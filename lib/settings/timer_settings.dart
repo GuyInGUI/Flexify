@@ -196,7 +196,7 @@ List<Widget> getTimerSettings(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: DropdownButtonFormField<String>(
-            initialValue: settings.progressPosition,
+            value: settings.progressPosition,
             decoration: const InputDecoration(
               labelStyle: TextStyle(),
               labelText: 'Progress bar position',

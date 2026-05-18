@@ -61,7 +61,7 @@ class _AddExercisePageState extends State<AddExercisePage> {
               ),
               DropdownButtonFormField<String>(
                 decoration: const InputDecoration(labelText: 'Unit'),
-                initialValue: unit,
+                value: unit,
                 items: const [
                   DropdownMenuItem(
                     value: 'kg',

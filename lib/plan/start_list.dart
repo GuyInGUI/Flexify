@@ -203,14 +203,12 @@ class _StartListState extends State<StartList> {
             trailing: trail,
             title: Row(
               children: [
-                RadioGroup<bool>(
+                Radio<bool>(
+                  value: index == widget.selected,
                   groupValue: true,
                   onChanged: (value) {
                     widget.onSelect(index);
                   },
-                  child: Radio<bool>(
-                    value: index == widget.selected,
-                  ),
                 ),
                 Flexible(child: Text(exercise.exercise)),
               ],

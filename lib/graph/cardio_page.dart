@@ -280,7 +280,7 @@ class _CardioPageState extends State<CardioPage> {
               children: [
                 DropdownButtonFormField(
                   decoration: const InputDecoration(labelText: 'Metric'),
-                  initialValue: metric,
+                  value: metric,
                   items: const [
                     DropdownMenuItem(
                       value: CardioMetric.pace,
@@ -314,7 +314,7 @@ class _CardioPageState extends State<CardioPage> {
                 SizedBox(height: 8),
                 DropdownButtonFormField(
                   decoration: const InputDecoration(labelText: 'Period'),
-                  initialValue: period,
+                  value: period,
                   items: const [
                     DropdownMenuItem(
                       value: Period.day,
@@ -351,7 +351,7 @@ class _CardioPageState extends State<CardioPage> {
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: DropdownButtonFormField<String>(
                           decoration: const InputDecoration(labelText: 'Unit'),
-                          initialValue: target,
+                          value: target,
                           items: cardioDistanceUnitMenuItems,
                           onChanged: (value) {
                             setState(() {

@@ -263,7 +263,7 @@ class _EditSetsPageState extends State<EditSetsPage> {
                   visible: showUnits,
                   child: DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'Unit'),
-                    initialValue: unit,
+                    value: unit,
                     items: _getUnitItems(),
                     onChanged: (String? newValue) {
                       setState(() {
@@ -286,7 +286,7 @@ class _EditSetsPageState extends State<EditSetsPage> {
                           labelText: 'Category',
                           hintText: oldCat,
                         ),
-                        initialValue: category,
+                        value: category,
                         items: snapshot.data
                             ?.map(
                               (category) => DropdownMenuItem(

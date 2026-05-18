@@ -1,3 +1,40 @@
+# Local Build Environment
+
+All build tools are bundled in the project folder. Never use system-installed Flutter, Dart, or JDK.
+
+| Tool | Path |
+|------|------|
+| flutter / dart | `/media/sam/Sai/2026_projects/flexify/flutter/bin/` |
+| JDK 17 | `/media/sam/Sai/2026_projects/flexify/jdk/jdk-17.0.2/bin/` |
+| Android SDK | `/home/sam/android-sdk/` (on ext4 — must stay here, exFAT breaks NDK) |
+| NDK | `/home/sam/android-sdk/ndk/28.2.13676358/` |
+| Pub cache | `/media/sam/Sai/2026_projects/flexify/.pub-cache/` |
+| Gradle cache | `/media/sam/Sai/2026_projects/flexify/.gradle/` (symlinked from `~/.gradle`) |
+
+## Required env vars for any build/run command
+```bash
+export JAVA_HOME="/media/sam/Sai/2026_projects/flexify/jdk/jdk-17.0.2"
+export ANDROID_HOME="/home/sam/android-sdk"
+export ANDROID_SDK_ROOT="/home/sam/android-sdk"
+export PUB_CACHE="/media/sam/Sai/2026_projects/flexify/.pub-cache"
+export GRADLE_USER_HOME="/media/sam/Sai/2026_projects/flexify/.gradle"
+export PATH="$JAVA_HOME/bin:/media/sam/Sai/2026_projects/flexify/flutter/bin:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+```
+
+Use `./build_apk.sh` to build a debug APK — it sets all env vars automatically.
+
+## Device / flutter run
+- Connected device: Samsung (adb ID `R3CT303F8LF`)
+- ADB: `/home/sam/android-sdk/platform-tools/adb`
+- Package name: `com.presley.flexify`
+- `~/.gradle` is a symlink to the project `.gradle` to avoid filling the home partition
+
+## Notes
+- Project lives on exFAT (`/media/sam/Sai`) — no Unix symlinks or `.so` file permissions
+- Android SDK must stay on ext4 (`/home/sam/android-sdk`) for NDK `.so` files to work
+- Flutter SDK and JDK on exFAT are fine (no symlink/permission requirements)
+- `flutter pub get` crashes on exFAT due to Windows plugin symlinks — use `--no-pub` flag or run from a terminal where the exFAT mount supports the operation
+
 # Drift Database Rules
 - ALWAYS read the Drift documentation at https://drift.simonbinder.eu/docs/ before modifying schemas or queries.
 - **Migration Protocol**: After any change to a table or database file:

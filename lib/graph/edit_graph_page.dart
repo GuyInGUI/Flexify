@@ -105,7 +105,7 @@ class _EditGraphPageState extends State<EditGraphPage> {
                       return DropdownButtonFormField(
                         decoration:
                             const InputDecoration(labelText: 'Category'),
-                        initialValue: category,
+                        value: category,
                         items: snapshot.data
                             ?.map(
                               (category) => DropdownMenuItem(
@@ -126,7 +126,7 @@ class _EditGraphPageState extends State<EditGraphPage> {
               ),
               DropdownButtonFormField(
                 decoration: const InputDecoration(labelText: 'Unit'),
-                initialValue: unit,
+                value: unit,
                 items: [
                   const DropdownMenuItem(
                     value: null,

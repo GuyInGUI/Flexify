@@ -209,7 +209,7 @@ class _StrengthPageState extends State<StrengthPage> {
                   visible: name != 'Weight',
                   child: DropdownButtonFormField(
                     decoration: const InputDecoration(labelText: 'Metric'),
-                    initialValue: metric,
+                    value: metric,
                     items: [
                       const DropdownMenuItem(
                         value: StrengthMetric.bestWeight,
@@ -244,7 +244,7 @@ class _StrengthPageState extends State<StrengthPage> {
                 ),
                 DropdownButtonFormField(
                   decoration: const InputDecoration(labelText: 'Period'),
-                  initialValue: period,
+                  value: period,
                   items: const [
                     DropdownMenuItem(
                       value: Period.day,
@@ -275,7 +275,7 @@ class _StrengthPageState extends State<StrengthPage> {
                   visible: settings.showUnits,
                   child: DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'Unit'),
-                    initialValue: target,
+                    value: target,
                     items: strengthUnitMenuItems,
                     onChanged: (String? newValue) {
                       setState(() {
