@@ -1,3 +1,7 @@
+# Local build tools
+flutter/
+jdk/
+
 # Miscellaneous
 *.class
 *.log
